@@ -4,7 +4,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 
 > **About me:** CompTIA Security+ certified professional with 4+ years in full-stack development and IT/OT consulting, now deepening hands-on cybersecurity skills. Background in RBAC implementation, MES infrastructure, and secure application development.
 
-[![TryHackMe](https://img.shields.io/badge/TryHackMe-camillamanzo-red?style=flat&logo=tryhackme)]([https://tryhackme.com/p/camillamanzo](https://tryhackme.com/p/CamiM98)
+[![TryHackMe](https://img.shields.io/badge/TryHackMe-camillamanzo-red?style=flat&logo=tryhackme)](https://tryhackme.com/p/CamiM98)
 [![Security+](https://img.shields.io/badge/CompTIA-Security%2B-red?style=flat)](https://www.credly.com/badges/0ab21ebf-70c0-4396-bbf4-76f8c4489d30/public_url)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Camilla%20Manzo-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/camilla-manzo-a18a65228/)
 
