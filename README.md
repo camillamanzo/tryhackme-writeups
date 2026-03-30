@@ -9,7 +9,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Camilla%20Manzo-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/camilla-manzo-a18a65228/)
 
 ---
-
+ 
 ## 📂 Write-Up Index
 
 ### 🐧 Linux & Systems
@@ -17,36 +17,56 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 |------|-----------|--------|----------|
 | Linux Fundamentals Pt. 1 | Easy | File system, permissions, CLI | [📄 Read](linux/linux-fundamentals-1.md) |
 | Linux Fundamentals Pt. 2 | Easy | Processes, cron, bash | [📄 Read](linux/linux-fundamentals-2.md) |
-
+| Linux Fundamentals Pt. 3 | Easy | Scripting, services, automation | [📄 Read](linux/linux-fundamentals-3.md) |
+ 
+### 🪟 Windows & Active Directory
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| Windows Fundamentals Pt. 1 | Easy | File system, registry, user management | [📄 Read](windows/windows-fundamentals-1.md) |
+| Windows Fundamentals Pt. 2 | Easy | Services, processes, security tools | [📄 Read](windows/windows-fundamentals-2.md) |
+| Active Directory Basics | Easy | AD structure, users, groups, GPOs | [📄 Read](windows/active-directory-basics.md) |
+ 
+### 💻 Command Line
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| Windows Command Line | Easy | CMD, PowerShell, scripting basics | [📄 Read](command-line/windows-cli.md) |
+| Linux Command Line | Easy | Bash, file ops, piping, grep | [📄 Read](command-line/linux-cli.md) |
+ 
 ### 🌐 Networking
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Pre-Security: Networking | Easy | OSI model, TCP/IP, DNS, HTTP | [📄 Read](networking/pre-security-networking.md) |
-| Wireshark 101 | Easy | Packet analysis, filters, protocols | [📄 Read](networking/wireshark-101.md) |
-
-### 🌍 Web Application Security
+| Networking Fundamentals | Easy | OSI model, TCP/IP, DNS, HTTP | [📄 Read](networking/networking-fundamentals.md) |
+| Networking Core Protocols | Easy | ARP, ICMP, routing, switching | [📄 Read](networking/core-protocols.md) |
+ 
+### 🔑 Cryptography
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| OWASP Top 10 | Easy | SQLi, XSS, IDOR, broken auth | [📄 Read](web/owasp-top-10.md) |
+| Cryptography Basics | Easy | Symmetric/asymmetric, hashing | [📄 Read](crypto/cryptography-basics.md) |
+| Public Key Infrastructure | Easy | PKI, certificates, TLS | [📄 Read](crypto/pki.md) |
+ 
+### ⚔️ Exploitation Basics
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| Exploitation Basics | Easy | Vulnerabilities, payloads, shells | [📄 Read](offensive/exploitation-basics.md) |
+| Metasploit Introduction | Easy | Modules, payloads, msfconsole | [📄 Read](offensive/metasploit-intro.md) |
+ 
+### 🌍 Web Application Hacking
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| Web Application Basics | Easy | HTTP, cookies, requests | [📄 Read](web/web-app-basics.md) |
 | Burp Suite Basics | Easy | Proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
 | SQL Injection | Medium | SQLMap, manual injection | [📄 Read](web/sql-injection.md) |
-
-### ⚔️ Offensive Security
-| Room | Difficulty | Topics | Write-Up |
-|------|-----------|--------|----------|
-| Metasploit Introduction | Easy | Modules, payloads, msfconsole | [📄 Read](offensive/metasploit-intro.md) |
-| Nmap | Easy | Port scanning, service detection, scripts | [📄 Read](offensive/nmap.md) |
-
-### 🛡️ Defensive Security & SOC
-| Room | Difficulty | Topics | Write-Up |
-|------|-----------|--------|----------|
-| SOC Level 1 | Easy | SIEM, log analysis, alert triage | [📄 Read](defensive/soc-level-1.md) |
-| Incident Response | Medium | IR lifecycle, containment, forensics | [📄 Read](defensive/incident-response.md) |
-
-### 🔑 Cryptography & PKI
-| Room | Difficulty | Topics | Write-Up |
-|------|-----------|--------|----------|
-| Cryptography Basics | Easy | Symmetric/asymmetric, hashing, PKI | [📄 Read](crypto/cryptography-basics.md) |
+ 
+### 🔜 Coming Soon
+| Module | Status |
+|--------|--------|
+| Offensive Security Tooling | 🔄 In Progress |
+| Defensive Security | 🔄 In Progress |
+| Security Solutions | ⏳ Upcoming |
+| Defensive Security Tooling | ⏳ Upcoming |
+| OWASP Top 10 | ⏳ Upcoming |
+ 
+---
 
 ---
 
@@ -91,13 +111,19 @@ Quick reference of commands and flags used in the room.
 
 ## 🎯 Learning Path Progress
 
-- [x] Pre-Security
 - [x] Linux Fundamentals
-- [x] Network Fundamentals
-- [x] Web Application Security (OWASP Top 10)
-- [ ] SOC Level 1
-- [ ] Jr Penetration Tester
-- [ ] Active Directory Basics
+- [x] Windows Fundamentals
+- [x] Active Directory Fundamentals
+- [x] Command Line
+- [x] Networking
+- [x] Cryptography
+- [x] Explpoitation Basics
+- [x] Web Application Hacking
+- [ ] Offensive Security Tooling
+- [ ] Defensive Security
+- [ ] Security Solutions
+- [ ] Defensive Security Tooling
+- [ ] OWASP Top 10
 
 ---
 
