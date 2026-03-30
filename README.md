@@ -32,9 +32,9 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
 | Networking | Easy | OSI model, core protocols, secure protocols | [📄 Read](networking/networking-fundamentals.md) |
-| Wireshark | Easy | how to analyse protocols and PCAPs | [📄 Read](networking/wireshark.md) |
-| Tcpdump | Easy | how to analyse protocols and PCAPs | [📄 Read](networking/tcpdump.md) |
-| Nmap | Easy | how to analyse protocols and PCAPs | [📄 Read](networking/nmap.md) |
+| Wireshark | Easy | traffic analyser | [📄 Read](networking/wireshark.md) |
+| Tcpdump | Easy | command-line packet monitor | [📄 Read](networking/tcpdump.md) |
+| Nmap | Easy | network scanner | [📄 Read](networking/nmap.md) |
  
 ### 🔑 Cryptography
 | Room | Difficulty | Topics | Write-Up |
