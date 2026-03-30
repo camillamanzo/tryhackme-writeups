@@ -15,16 +15,12 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 ### 🐧 Linux & Systems
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Linux Fundamentals Pt. 1 | Easy | File system, permissions, CLI | [📄 Read](linux/linux-fundamentals-1.md) |
-| Linux Fundamentals Pt. 2 | Easy | Processes, cron, bash | [📄 Read](linux/linux-fundamentals-2.md) |
-| Linux Fundamentals Pt. 3 | Easy | Scripting, services, automation | [📄 Read](linux/linux-fundamentals-3.md) |
+| Linux Fundamentals | Easy | processes, filesystem, shell op., ssh, dir | [📄 Read](linux/linux-fundamentals.md) |
  
 ### 🪟 Windows & Active Directory
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Windows Fundamentals Pt. 1 | Easy | File system, registry, user management | [📄 Read](windows/windows-fundamentals-1.md) |
-| Windows Fundamentals Pt. 2 | Easy | Services, processes, security tools | [📄 Read](windows/windows-fundamentals-2.md) |
-| Active Directory Basics | Easy | AD structure, users, groups, GPOs | [📄 Read](windows/active-directory-basics.md) |
+| Windows Fundamentals Pt. 1 | Easy | compmgmt, msinfo32, security, cmd, AD | [📄 Read](windows/windows-fundamentals.md) |
  
 ### 💻 Command Line
 | Room | Difficulty | Topics | Write-Up |
