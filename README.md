@@ -1,6 +1,6 @@
 # 🔐 TryHackMe Write-Ups
 
-Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive security.
+Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive security. I have summarised the topics I have studies so far, and will continue to do so for the whole Cybersecurity101 learning path.
 
 > **About me:** CompTIA Security+ certified professional with 4+ years in full-stack development and IT/OT consulting, now deepening hands-on cybersecurity skills. Background in RBAC implementation, MES infrastructure, and secure application development.
 
@@ -46,7 +46,8 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
 | Moniker Link (CVE-2024-21413) | Easy | Vulnerabilities, payloads, shells | [📄 Read](offensive/moniker.md) |
-| Metasploit | Easy | intro, exploitation, meterpreter, blue | [📄 Read](offensive/metasploit.md) |
+| Metasploit | Easy | intro, exploitation, meterpreter | [📄 Read](offensive/metasploit.md) |
+| Attack Example | Easy | recon, gain access, escalate, cracking, flag hunting | [📄 Read](offensive/attack.md) |
  
 ### 🌍 Web Application Hacking
 | Room | Difficulty | Topics | Write-Up |
