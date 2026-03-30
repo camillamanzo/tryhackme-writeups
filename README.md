@@ -20,7 +20,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 ### 🪟 Windows & Active Directory
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Windows Fundamentals Pt. 1 | Easy | compmgmt, msinfo32, security, cmd, AD | [📄 Read](windows/windows-fundamentals.md) |
+| Windows Fundamentals | Easy | compmgmt, msinfo32, security, cmd, AD | [📄 Read](windows/windows-fundamentals.md) |
  
 ### 💻 Command Line
 | Room | Difficulty | Topics | Write-Up |
@@ -31,27 +31,30 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 ### 🌐 Networking
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Networking Fundamentals | Easy | OSI model, TCP/IP, DNS, HTTP | [📄 Read](networking/networking-fundamentals.md) |
-| Networking Core Protocols | Easy | ARP, ICMP, routing, switching | [📄 Read](networking/core-protocols.md) |
+| Networking | Easy | OSI model, core protocols, secure protocols | [📄 Read](networking/networking-fundamentals.md) |
+| Wireshark | Easy | how to analyse protocols and PCAPs | [📄 Read](networking/wireshark.md) |
+| Tcpdump | Easy | how to analyse protocols and PCAPs | [📄 Read](networking/tcpdump.md) |
+| Nmap | Easy | how to analyse protocols and PCAPs | [📄 Read](networking/nmap.md) |
  
 ### 🔑 Cryptography
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Cryptography Basics | Easy | Symmetric/asymmetric, hashing | [📄 Read](crypto/cryptography-basics.md) |
-| Public Key Infrastructure | Easy | PKI, certificates, TLS | [📄 Read](crypto/pki.md) |
+| Cryptography | Easy | symmetric, PK cryptography, hashing | [📄 Read](crypto/cryptography.md) |
+| John The Ripper | Easy | auth hashes, rules, zip/rar, ssh | [📄 Read](crypto/jtr.md) |
  
 ### ⚔️ Exploitation Basics
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Exploitation Basics | Easy | Vulnerabilities, payloads, shells | [📄 Read](offensive/exploitation-basics.md) |
-| Metasploit Introduction | Easy | Modules, payloads, msfconsole | [📄 Read](offensive/metasploit-intro.md) |
+| Moniker Link (CVE-2024-21413) | Easy | Vulnerabilities, payloads, shells | [📄 Read](offensive/moniker.md) |
+| Metasploit | Easy | intro, exploitation, meterpreter, blue | [📄 Read](offensive/metasploit.md) |
  
 ### 🌍 Web Application Hacking
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Web Application Basics | Easy | HTTP, cookies, requests | [📄 Read](web/web-app-basics.md) |
-| Burp Suite Basics | Easy | Proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
+| Web Appplication Basics | Easy | HTTP, cookies, headers, status codes | [📄 Read](web/web-app-basics.md) |
+| JavaScript | Medium | JS overview | [📄 Read](web/js.md) |
 | SQL Injection | Medium | SQLMap, manual injection | [📄 Read](web/sql-injection.md) |
+| Burp Suite Basics | Easy | Proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
  
 ### 🔜 Coming Soon
 | Module | Status |
