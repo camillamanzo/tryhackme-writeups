@@ -54,7 +54,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 |------|-----------|--------|----------|
 | Web Appplication Basics | Easy | HTTP, cookies, headers, status codes | [📄 Read](web/web-app-basics.md) |
 | JavaScript | Medium | JS overview | [📄 Read](web/js.md) |
-| SQL Injection | Medium | SQLMap, manual injection | [📄 Read](web/sql-injection.md) |
+| SQL | Medium | SQLMap, manual injection | [📄 Read](web/sql.md) |
 | Burp Suite Basics | Easy | Proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
  
 ### 🔜 Coming Soon
