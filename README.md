@@ -55,12 +55,19 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Web Appplication Basics | Easy | HTTP, cookies, headers, status codes | [📄 Read](web/web-app-basics.md) |
 | JavaScript | Medium | JS overview | [📄 Read](web/js.md) |
 | SQL | Medium | databases, SQL, commands | [📄 Read](web/sql.md) |
-| Burp Suite Basics | Easy | Proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
- 
+| Burp Suite | Easy | Proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
+
+### 🌍 Offensive Security Tooling
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| Hydra | Easy | commands, ssh, post form | [📄 Read](off-tooling/hydra.md) |
+| GoBusters |  |  | [📄 Read](off-tooling/gobusters.md) |
+| Shells |  |  | [📄 Read](off-tooling/shells.md) |
+| SQLMap |  |  | [📄 Read](off-tooling/sqlmap.md) |
+
 ### 🔜 Coming Soon
 | Module | Status |
 |--------|--------|
-| Offensive Security Tooling | 🔄 In Progress |
 | Defensive Security | 🔄 In Progress |
 | Security Solutions | ⏳ Upcoming |
 | Defensive Security Tooling | ⏳ Upcoming |
