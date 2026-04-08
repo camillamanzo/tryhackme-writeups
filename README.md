@@ -61,7 +61,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
 | Hydra | Easy | commands, ssh, post form | [📄 Read](off-tooling/hydra.md) |
-| GoBusters |  |  | [📄 Read](off-tooling/gobusters.md) |
+| GoBusters | Easy | commands, dir & file, dns, vhost | [📄 Read](off-tooling/gobusters.md) |
 | Shells |  |  | [📄 Read](off-tooling/shells.md) |
 | SQLMap |  |  | [📄 Read](off-tooling/sqlmap.md) |
 
