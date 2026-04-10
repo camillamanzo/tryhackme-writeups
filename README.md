@@ -63,7 +63,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Hydra | Easy | commands, ssh, post form | [📄 Read](off-tooling/hydra.md) |
 | GoBusters | Easy | commands, dir & file, dns, vhost | [📄 Read](off-tooling/gobusters.md) |
 | Shells | Easy | reverse, bind, listener, payloads, web | [📄 Read](off-tooling/shells.md) |
-| SQLMap |  |  | [📄 Read](off-tooling/sqlmap.md) |
+| SQLMap | Easy | db, sql injection, injection tool | [📄 Read](off-tooling/sqlmap.md) |
 
 ### 🔜 Coming Soon
 | Module | Status |
