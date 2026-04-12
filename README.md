@@ -65,6 +65,13 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Shells | Easy | reverse, bind, listener, payloads, web | [📄 Read](off-tooling/shells.md) |
 | SQLMap | Easy | db, sql injection, injection tool | [📄 Read](off-tooling/sqlmap.md) |
 
+### 🌍 Defensive Security 
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| Overview | Easy | soc, digital forensic, incident response | [📄 Read](def-tooling/overview.md) |
+| SOC Fundamentals | Easy | baseline, detection and response, roles | [📄 Read](def-tooling/soc.md) |
+
+
 ### 🔜 Coming Soon
 | Module | Status |
 |--------|--------|
