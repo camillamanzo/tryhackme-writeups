@@ -70,6 +70,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 |------|-----------|--------|----------|
 | Overview | Easy | soc, digital forensic, incident response | [📄 Read](def-tooling/overview.md) |
 | SOC Fundamentals | Easy | baseline, detection and response, roles | [📄 Read](def-tooling/soc.md) |
+| Digital Forensic Fundamentals | Easy | methodology, acquisition, windows forensics | [📄 Read](def-tooling/df.md) |
 
 
 ### 🔜 Coming Soon
