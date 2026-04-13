@@ -74,16 +74,12 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | incidents response Fundamentals | Easy | process, techniques | [📄 Read](def-tooling/ir.md) |
 | Logs Fundamentals | Easy | event viewer, access.log analysis | [📄 Read](def-tooling/logs.md) |
 
-
 ### 🔜 Coming Soon
 | Module | Status |
 |--------|--------|
-| Defensive Security | 🔄 In Progress |
-| Security Solutions | ⏳ Upcoming |
+| Security Solutions | 🔄 In Progress |
 | Defensive Security Tooling | ⏳ Upcoming |
 | OWASP Top 10 | ⏳ Upcoming |
- 
----
 
 ---
 
@@ -136,8 +132,8 @@ Quick reference of commands and flags used in the room.
 - [x] Cryptography
 - [x] Explpoitation Basics
 - [x] Web Application Hacking
-- [ ] Offensive Security Tooling
-- [ ] Defensive Security
+- [x] Offensive Security Tooling
+- [x] Defensive Security
 - [ ] Security Solutions
 - [ ] Defensive Security Tooling
 - [ ] OWASP Top 10
