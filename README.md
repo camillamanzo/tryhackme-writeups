@@ -74,6 +74,11 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | incidents response Fundamentals | Easy | process, techniques | [📄 Read](def-tooling/ir.md) |
 | Logs Fundamentals | Easy | event viewer, access.log analysis | [📄 Read](def-tooling/logs.md) |
 
+### 🌍 Security solutions
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| SIEM | Easy | features, log sources and ingestion, alert and analysis | [📄 Read](sec-solutions/siem.md) |
+
 ### 🔜 Coming Soon
 | Module | Status |
 |--------|--------|
