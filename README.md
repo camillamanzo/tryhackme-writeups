@@ -78,6 +78,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
 | SIEM | Easy | features, log sources and ingestion, alert and analysis | [📄 Read](sec-solutions/siem.md) |
+| Firewalls | Easy | types, rules, windows defender, linux iptables | [📄 Read](sec-solutions/fw.md) |
 
 ### 🔜 Coming Soon
 | Module | Status |
