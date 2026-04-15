@@ -45,7 +45,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 ### ⚔️ Exploitation Basics
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Moniker Link (CVE-2024-21413) | Easy | Vulnerabilities, payloads, shells | [📄 Read](offensive/moniker.md) |
+| Moniker Link (CVE-2024-21413) | Easy | vulnerabilities, payloads, shells | [📄 Read](offensive/moniker.md) |
 | Metasploit | Easy | intro, exploitation, meterpreter | [📄 Read](offensive/metasploit.md) |
 | Attack Example | Easy | recon, gain access, escalate, cracking, flag hunting | [📄 Read](offensive/attack.md) |
  
@@ -55,7 +55,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Web Appplication Basics | Easy | HTTP, cookies, headers, status codes | [📄 Read](web/web-app-basics.md) |
 | JavaScript | Medium | JS overview | [📄 Read](web/js.md) |
 | SQL | Medium | databases, SQL, commands | [📄 Read](web/sql.md) |
-| Burp Suite | Easy | Proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
+| Burp Suite | Easy | proxy, repeater, intruder | [📄 Read](web/burp-suite-basics.md) |
 
 ### 🌍 Offensive Security Tooling
 | Room | Difficulty | Topics | Write-Up |
