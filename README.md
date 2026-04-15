@@ -80,6 +80,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | SIEM | Easy | features, log sources and ingestion, alert and analysis | [📄 Read](sec-solutions/siem.md) |
 | Firewalls | Easy | types, rules, windows defender, linux iptables | [📄 Read](sec-solutions/fw.md) |
 | IDS | Easy | overview, snort | [📄 Read](sec-solutions/ids.md) |
+| Vulnerability scanner | Easy | overview, tools, cve & cvss, openVAS | [📄 Read](sec-solutions/vs.md) |
 
 ### 🔜 Coming Soon
 | Module | Status |
