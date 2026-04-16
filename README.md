@@ -74,7 +74,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | incidents response Fundamentals | Easy | process, techniques | [📄 Read](def-tooling/ir.md) |
 | Logs Fundamentals | Easy | event viewer, access.log analysis | [📄 Read](def-tooling/logs.md) |
 
-### 🌍 Security solutions
+### 🌍 Security Solutions
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
 | SIEM | Easy | features, log sources and ingestion, alert and analysis | [📄 Read](sec-solutions/siem.md) |
@@ -82,11 +82,18 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | IDS | Easy | overview, snort | [📄 Read](sec-solutions/ids.md) |
 | Vulnerability scanner | Easy | overview, tools, cve & cvss, openVAS | [📄 Read](sec-solutions/vs.md) |
 
+### 🌍 Defensive Security Tooling
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| CyberChef | Easy | overview, interfaces, categories | [📄 Read](def-tools/cyberchef.md) |
+| CAPA | Easy |  | [📄 Read](def-tools/capa.md) |
+| REMnux | Easy |  | [📄 Read](def-tools/remnux.md) |
+| FlareVM | Easy |  | [📄 Read](def-tools/flarevm.md) |
+
 ### 🔜 Coming Soon
 | Module | Status |
 |--------|--------|
-| Security Solutions | 🔄 In Progress |
-| Defensive Security Tooling | ⏳ Upcoming |
+| Defensive Security Tooling | 🔄 In Progress |
 | OWASP Top 10 | ⏳ Upcoming |
 
 ---
@@ -142,7 +149,7 @@ Quick reference of commands and flags used in the room.
 - [x] Web Application Hacking
 - [x] Offensive Security Tooling
 - [x] Defensive Security
-- [ ] Security Solutions
+- [x] Security Solutions
 - [ ] Defensive Security Tooling
 - [ ] OWASP Top 10
 
