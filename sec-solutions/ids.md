@@ -1,118 +1,114 @@
 # IDS — Intrusion Detection Systems
 
-## Overview
+## 🔍 Overview
 
-An **Intrusion Detection System (IDS)** monitors network traffic and generates alerts — it does not take action to block or stop threats.
+An **Intrusion Detection System (IDS)** monitors network traffic and generates alerts — it does **not** take action to block or stop threats. It is a passive security control, unlike an IPS (Intrusion Prevention System) which actively blocks traffic.
 
----
-
-## Types
-
-| Type | Description |
-|------|-------------|
-| **HIDS** (Host IDS) | Installed on individual hosts; monitors only that host |
-| **NIDS** (Network IDS) | Monitors traffic across all hosts; provides a centralised detection view |
+> **IDS vs IPS:** An IDS detects and alerts. An IPS detects, alerts, *and* blocks. Many modern tools (including Snort) can operate in both modes.
 
 ---
 
-## Detection Modes
+## 🖥️ IDS Types
 
-| Mode | How it works | Limitation |
-|------|--------------|------------|
-| **Signature-based** | Matches traffic against a database of known attack patterns | Cannot detect zero-days |
-| **Anomaly-based** | Learns a baseline of normal behaviour, then flags deviations | May produce false positives |
-| **Hybrid** | Combines both signature and anomaly methods to leverage their strengths | — |
+| Type | Scope | Where It Runs | Description |
+|------|-------|--------------|-------------|
+| **HIDS** (Host IDS) | Single host | On the host itself | Monitors logs, file system changes, and process activity on that machine only |
+| **NIDS** (Network IDS) | Whole network | On a network tap or mirrored port | Monitors all traffic flowing through the network — centralised detection view |
 
 ---
 
-## Snort
+## 🧠 Detection Modes
 
-Open source, **hybrid IDS** (signature-based + anomaly-based).
+| Mode | How It Works | Strength | Limitation |
+|------|--------------|----------|------------|
+| **Signature-based** | Matches traffic against a database of known attack patterns (like antivirus) | Accurate for known threats, low false positives | Cannot detect zero-days or novel attacks |
+| **Anomaly-based** | Learns a baseline of normal behaviour, then flags deviations | Can detect unknown threats | Higher false positive rate — legitimate unusual behaviour may trigger alerts |
+| **Hybrid** | Combines signature and anomaly detection | Best of both — broader coverage | More complex to tune and maintain |
+
+---
+
+## 🐷 Snort
+
+**Snort** is an open source, hybrid IDS/IPS widely used in both enterprise and lab environments. It supports signature-based and anomaly-based detection and can run in three distinct modes.
 
 ### Modes
 
-#### Packet Sniffer Mode
-- Reads and displays network packets without analysing them
-- Useful for network monitoring and troubleshooting
-- **Use when:** detailed insight into traffic is needed to diagnose network performance issues
-
-#### Packet Logging Mode
-- Performs detection on network traffic in real-time
-- Detections displayed as alerts on the console or written to a `.pcap` file
-- **Use when:** traffic logs are needed for root cause analysis
-
-#### NIDS Mode
-- Monitors network traffic in real-time and applies rule files to identify matches
-- Signature matches generate alerts
-- **Use when:** proactively monitoring network or systems to detect potential threats
+| Mode | What It Does | Output | Use When |
+|------|--------------|--------|----------|
+| **Packet Sniffer** | Reads and displays packets in real-time — no analysis | Console output | Diagnosing network performance issues or inspecting raw traffic |
+| **Packet Logging** | Captures and logs traffic to disk — no active rule matching | `.pcap` files | Collecting traffic logs for later root cause analysis |
+| **NIDS** | Monitors traffic in real-time and applies rule files — generates alerts on matches | Alerts to console or log | Proactive threat detection across a network or system |
 
 ---
 
-### Configuration
+### ⚙️ Configuration
 
 | Path | Purpose |
 |------|---------|
-| `/etc/snort/snort.conf` | Main config file — defines enabled rules, network range to monitor, etc. |
-| `/etc/snort/rules/` | Directory containing rule files |
+| `/etc/snort/snort.conf` | Main config file — defines enabled rules, variables (e.g. `$HOME_NET`), output plugins, and network range to monitor |
+| `/etc/snort/rules/` | Directory containing rule files (e.g. `local.rules`, `community.rules`) |
 
-**Enable promiscuous mode** on the host's network interface so Snort can capture traffic across the whole network, not just traffic addressed to that host.
+> **Promiscuous mode:** Enable it on the host's network interface so Snort captures all traffic on the network segment — not just traffic addressed to that host. Without it, Snort only sees its own traffic.
 
 ---
 
-### Rule Syntax
+### 📏 Rule Syntax
 
 ```
-action protocol sourceIP sourcePort -> destinationIP destinationPort (ruleMetadata)
+action protocol sourceIP sourcePort -> destinationIP destinationPort (msg:"..."; sid:XXXXX; rev:X;)
 ```
 
-| Field | Description |
-|-------|-------------|
-| `action` | What to do when the rule triggers (e.g. `alert`, `log`, `drop`) |
-| `protocol` | Protocol to match (e.g. `tcp`, `udp`, `icmp`) |
-| `sourceIP` | Source IP address of the traffic |
-| `sourcePort` | Source port of the traffic |
-| `destinationIP` | Destination IP — can be a variable defined in `snort.conf` (e.g. `$HOME_NET`) |
-| `destinationPort` | Destination port |
-| `msg` | Human-readable description of the alert |
-| `sid` | Signature ID — unique rule identifier |
-| `rev` | Rule revision number |
+| Field | Description | Example Values |
+|-------|-------------|----------------|
+| `action` | What to do when the rule triggers | `alert`, `log`, `drop`, `reject` |
+| `protocol` | Protocol to match | `tcp`, `udp`, `icmp`, `ip` |
+| `sourceIP` | Source IP address | `any`, `192.168.1.0/24` |
+| `sourcePort` | Source port | `any`, `80`, `1024:65535` |
+| `->` | Direction of traffic flow | Always source → destination |
+| `destinationIP` | Destination IP — can use variables from `snort.conf` | `$HOME_NET`, `10.0.0.1` |
+| `destinationPort` | Destination port | `any`, `443`, `22` |
+| `msg` | Human-readable alert description (shown in logs) | `"ping detected"` |
+| `sid` | Signature ID — must be unique per rule | `10001` (custom rules start at 1000000+) |
+| `rev` | Rule revision — increment when updating a rule | `1` |
 
-**Example:**
+**Example rule:**
 ```
 alert icmp any any -> $HOME_NET any (msg:"ping detected"; sid:10001; rev:1;)
 ```
 
 ---
 
-### Rule Creation
+### ✏️ Rule Creation
 
-Add a new rule to the local rules file:
+Open the local rules file and add your custom rule:
 
 ```bash
 sudo nano /etc/snort/rules/local.rules
 ```
 
-Example rule:
+Example — alert on loopback ping:
 ```
 alert icmp any any -> 127.0.0.1 any (msg:"Loopback Ping Detected"; sid:10003; rev:1;)
 ```
 
+> **SID ranges:** Snort reserves SIDs below 1,000,000 for official rules. Use SIDs ≥ 1,000,000 for local custom rules to avoid conflicts.
+
 ---
 
-### Rule Testing (Live Interface)
+### 🧪 Rule Testing — Live Interface
 
-**Step 1 — Start Snort:**
+**Step 1 — Start Snort on the loopback interface:**
 ```bash
 sudo snort -q -l /var/log/snort -i lo -A console -c /etc/snort/snort.conf
 ```
 
-| Flag | Description |
-|------|-------------|
-| `-q` | Quiet mode — suppresses banner, init messages, and packet count summaries |
-| `-l /var/log/snort` | Sets the log output directory |
-| `-i lo` | Specifies the network interface to listen on (`lo` = loopback) |
-| `-A console` | Prints alerts directly to the terminal |
-| `-c /etc/snort/snort.conf` | Points to the config file so Snort knows which rules to load |
+| Flag | Value | Description |
+|------|-------|-------------|
+| `-q` | — | Quiet mode — suppresses banner, init messages, and packet count summaries |
+| `-l` | `/var/log/snort` | Log output directory |
+| `-i` | `lo` | Network interface to listen on (`lo` = loopback) |
+| `-A` | `console` | Alert mode — prints alerts directly to the terminal |
+| `-c` | `/etc/snort/snort.conf` | Config file — tells Snort which rules to load |
 
 **Step 2 — Trigger the rule:**
 ```bash
@@ -123,18 +119,20 @@ ping 127.0.0.1
 
 ---
 
-### Running Snort on PCAP Files
+### 📁 Running Snort on PCAP Files
 
-To perform detections on historical network traffic saved in a `.pcap` file:
+Used to replay and analyse historical network traffic captures:
 
 ```bash
 sudo snort -q -l /var/log/snort -r path/to/file.pcap -A console -c /etc/snort/snort.conf
 ```
 
-| Flag | Description |
-|------|-------------|
-| `-q` | Quiet mode |
-| `-l /var/log/snort` | Log output directory |
-| `-r path/to/file.pcap` | Tells Snort to read from a saved capture file instead of a live interface |
-| `-A console` | Prints alerts to the terminal |
-| `-c /etc/snort/snort.conf` | Config file with rules to apply |
+| Flag | Value | Description |
+|------|-------|-------------|
+| `-q` | — | Quiet mode |
+| `-l` | `/var/log/snort` | Log output directory |
+| `-r` | `path/to/file.pcap` | Read from a saved capture file instead of a live interface |
+| `-A` | `console` | Print alerts to the terminal |
+| `-c` | `/etc/snort/snort.conf` | Config file with rules to apply |
+
+> **Tip:** PCAP files can be captured with tools like `tcpdump` or Wireshark and then analysed offline with Snort — useful for forensic investigation or testing new rules against known traffic.
