@@ -85,10 +85,10 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 ### 🌍 Defensive Security Tooling
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| CyberChef | Easy | overview, interfaces, categories | [📄 Read](def-tools/cyberchef.md) |
-| CAPA | Easy |  | [📄 Read](def-tools/capa.md) |
-| REMnux | Easy |  | [📄 Read](def-tools/remnux.md) |
-| FlareVM | Easy |  | [📄 Read](def-tools/flarevm.md) |
+| CyberChef | Easy | overview, interfaces, categories | [📄 Read](defensive/cyberchef.md) |
+| CAPA | Easy |  | [📄 Read](defensive/capa.md) |
+| REMnux | Easy |  | [📄 Read](defensive/remnux.md) |
+| FlareVM | Easy |  | [📄 Read](defensive/flarevm.md) |
 
 ### 🔜 Coming Soon
 | Module | Status |
