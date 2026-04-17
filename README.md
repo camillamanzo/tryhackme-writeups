@@ -86,7 +86,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
 | CyberChef | Easy | overview, interfaces, categories | [📄 Read](defensive/cyberchef.md) |
-| CAPA | Easy |  | [📄 Read](defensive/capa.md) |
+| CAPA | Easy | overview, result analsys | [📄 Read](defensive/capa.md) |
 | REMnux | Easy |  | [📄 Read](defensive/remnux.md) |
 | FlareVM | Easy |  | [📄 Read](defensive/flarevm.md) |
 
