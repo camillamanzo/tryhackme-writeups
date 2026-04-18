@@ -88,13 +88,12 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | CyberChef | Easy | overview, interfaces, categories | [📄 Read](defensive/cyberchef.md) |
 | CAPA | Easy | overview, result analsys | [📄 Read](defensive/capa.md) |
 | REMnux | Easy | oledump.py, INetSim, volatility | [📄 Read](defensive/remnux.md) |
-| FlareVM | Easy |  | [📄 Read](defensive/flarevm.md) |
+| FlareVM | Easy | tools, main tools analysis | [📄 Read](defensive/flarevm.md) |
 
 ### 🔜 Coming Soon
 | Module | Status |
 |--------|--------|
-| Defensive Security Tooling | 🔄 In Progress |
-| OWASP Top 10 | ⏳ Upcoming |
+| OWASP Top 10 | 🔄 In Progress |
 
 ---
 
