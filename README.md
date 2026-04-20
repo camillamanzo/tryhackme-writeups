@@ -90,6 +90,11 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 | REMnux | Easy | oledump.py, INetSim, volatility | [📄 Read](defensive/remnux.md) |
 | FlareVM | Easy | tool categories, key tools analysis | [📄 Read](defensive/flarevm.md) |
 
+### 🌍 General Security
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| Security Principles | Easy | secuirty triad, secuirty models, ISO/IEC 19249, zero trust | [📄 Read](general/principles.md) |
+
 ### 🔜 Coming Soon
 | Module | Status |
 |--------|--------|
