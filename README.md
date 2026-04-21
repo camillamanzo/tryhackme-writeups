@@ -1,4 +1,4 @@
-# 🔐 TryHackMe Write-Ups
+# 🔐 TryHackMe CyberSecurity101 Write-Ups
 
 Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive security. I have summarised the topics I have studies so far, and will continue to do so for the whole Cybersecurity101 learning path.
 
