@@ -100,7 +100,7 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 |------|-----------|--------|----------|
 | IAAA Failures | Easy | broken access control, authentication failures, logging and alerting failures | [📄 Read](owasp/iaaa.md) |
 | Application Design Overflow | Easy | security misconfigurations, software supply chain, cryotographic failures | [📄 Read](owasp/ado.md) |
-| Insecure Data Handling | Easy |  | [📄 Read](owasp/idh.md) |
+| Insecure Data Handling | Easy | cryptographic failures, injection, software or data integrity failures | [📄 Read](owasp/idh.md) |
 
 ---
 
