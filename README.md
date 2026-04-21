@@ -156,8 +156,8 @@ Quick reference of commands and flags used in the room.
 - [x] Offensive Security Tooling
 - [x] Defensive Security
 - [x] Security Solutions
-- [ ] Defensive Security Tooling
-- [ ] OWASP Top 10
+- [x] Defensive Security Tooling
+- [x] OWASP Top 10
 
 ---
 
