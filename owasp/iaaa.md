@@ -1,194 +1,109 @@
-# IAAA Failures
+# IAAA Failures — Identity, Authentication, Authorisation & Accountability
 
-## 🔐 IAAA — Identity, Authorisation, Authentication & Accountability
+## 🧩 The IAAA Framework
 
-Before diving into the vulnerabilities, it helps to understand the four pillars these failures break.
+IAAA describes the four sequential steps that make up secure access control. Each step builds on the previous — if any one fails, the entire chain can collapse.
 
-| Pillar | Description | Example |
-|--------|-------------|---------|
-| **Identity** | A unique account representing a person or service | Email address, user ID, API key |
-| **Authentication** | Proving you are who you claim to be | Password, OTP, biometric |
-| **Authorisation** | What an authenticated identity is allowed to do | Role-based access, permissions |
-| **Accountability** | Recording and alerting on who did what, when, and from where | Audit logs, SIEM alerts |
+| Step | Pillar | Description | Example |
+|------|--------|-------------|---------|
+| 1 | **Identity** | A unique account representing a person or service | Email address, user ID, service account, API key |
+| 2 | **Authentication** | Proving you are who you claim to be | Password, OTP, biometric, certificate |
+| 3 | **Authorisation** | Defining what an authenticated identity is allowed to do | Role-based access, file permissions, API scopes |
+| 4 | **Accountability** | Recording and alerting on who did what, when, and from where | Audit logs, SIEM alerts, access trails |
+
+> **The chain matters:** Identity without authentication is trust without proof. Authentication without authorisation is access without limits. Authorisation without accountability is action without consequence. All four must work together.
 
 ---
 
 ## A01 — Broken Access Control 🚪
 
-**What it is:** The server fails to properly enforce authorisation — users can access resources or perform actions they shouldn't be allowed to.
+**What it is:** The server fails to properly enforce **authorisation** — users can access data or perform actions they shouldn't be permitted to.
+
+> **Root cause:** Access control is enforced client-side (e.g. buttons are hidden in the UI) but not server-side — the server never validates whether the requesting user actually has permission. Removing the UI restriction, or crafting a direct request, bypasses the control entirely.
 
 ### Attack Patterns
 
-| Pattern | Description | Example |
-|---------|-------------|---------|
-| **IDOR** (Insecure Direct Object Reference) | Manipulating a reference to access another user's data | Changing `?id=6` to `?id=7` in the URL reveals another user's record |
-| **Horizontal Privilege Escalation** | Same role, different user's data | User A accesses User B's account without elevated permissions |
-| **Vertical Privilege Escalation** | Gaining higher-privilege access than assigned | A regular user performs admin-only actions |
+| Attack | Description | Example |
+|--------|-------------|---------|
+| **IDOR** (Insecure Direct Object Reference) | A user manipulates a reference in a request to access another user's resource | Changing `?id=6` to `?id=7` in the URL reveals another user's private data |
+| **Horizontal Privilege Escalation** | Same permission level, but accessing another user's data or resources | User A reads or modifies User B's account without needing elevated privileges |
+| **Vertical Privilege Escalation** | Gaining access to a higher permission level than assigned | A regular user triggers admin-only functionality (e.g. deleting users, changing roles) |
+| **Forced Browsing** | Directly navigating to URLs or API endpoints that are not linked in the UI but still accessible | Accessing `/admin/dashboard` directly despite not being an admin |
+| **JWT/Token Manipulation** | Modifying an authentication token to change roles or user IDs | Editing a JWT payload from `"role":"user"` to `"role":"admin"` if signature is not verified |
 
-> **Root cause:** Access control is enforced client-side (UI hides buttons) rather than server-side — the server itself never validates whether the requesting user is authorised.
+### Prevention
+
+- Enforce access control **server-side** on every request — never trust the client
+- Deny by default — access requires an explicit grant, not the absence of a denial
+- Use a centralised authorisation mechanism rather than scattered per-route checks
+- Log access control failures and alert on repeated violations
+- Rate-limit and monitor API endpoints — especially those that accept user-controlled IDs
 
 ---
 
 ## A07 — Authentication Failures 🔑
 
-**What it is:** The application cannot reliably verify and bind a user's identity — authentication mechanisms are weak, bypassable, or broken.
+**What it is:** The application cannot reliably verify and bind a user's identity — authentication mechanisms are weak, inconsistent, or bypassable.
 
-### Common Issues
+> **Why it matters:** Authentication is the gatekeeper. If it fails, all other controls (authorisation, logging, session management) are built on a broken foundation. A successful authentication bypass often grants full account access.
 
-| Weakness | Description |
-|----------|-------------|
-| **Username enumeration** | Different error messages for valid vs invalid usernames allow attackers to confirm which accounts exist |
-| **Weak passwords** | No complexity requirements, no lockout, no rate limiting — brute force is trivial |
-| **Logic flaws** | Bugs in login or registration flows that allow bypassing authentication entirely |
-| **Insecure session handling** | Session tokens exposed in URLs, not invalidated on logout, or guessable |
-| **Insecure cookie handling** | Cookies missing `HttpOnly`, `Secure`, or `SameSite` flags |
+### Common Weaknesses
 
-> **Impact:** Broken authentication is the gateway to every other attack — if an attacker can authenticate as another user (especially an admin), all other controls may be irrelevant.
+| Weakness | Description | Risk |
+|----------|-------------|------|
+| **Username enumeration** | Different responses for valid vs invalid usernames reveal which accounts exist | Enables targeted brute force and credential stuffing |
+| **No rate limiting or lockout** | Unlimited login attempts allowed without slowdown or lockout | Makes brute force and password spraying trivial |
+| **Weak password policy** | No minimum length, complexity, or breach-password checking | Easy to crack offline or guess online |
+| **Logic flaws in auth flow** | Bugs in login, registration, or password reset that allow bypassing authentication | e.g. resetting another user's password by manipulating a token or email parameter |
+| **Insecure session tokens** | Tokens are guessable, not rotated after login, or not invalidated on logout | Session hijacking or fixation attacks |
+| **Insecure cookie handling** | Cookies missing `HttpOnly`, `Secure`, or `SameSite` flags | Tokens exposed to XSS, sent over HTTP, or used in CSRF attacks |
+| **No MFA** | Single factor authentication only — one stolen credential is enough | Credential stuffing leads directly to account takeover |
+
+### Prevention
+
+- Implement rate limiting and account lockout on authentication endpoints
+- Check passwords against known breach databases (e.g. HaveIBeenPwned API)
+- Invalidate session tokens on logout and rotate them after authentication
+- Set cookies with `HttpOnly`, `Secure`, and `SameSite=Strict` or `Lax`
+- Return identical error messages for invalid username and invalid password — prevent enumeration
+- Enforce MFA for all accounts, especially privileged ones
+- Use secure, time-limited tokens for password reset flows — single-use and bound to the requesting user
 
 ---
 
 ## A09 — Logging and Alerting Failures 📋
 
-**What it is:** Applications fail to record or alert on security-relevant events — leaving defenders blind to ongoing attacks.
+**What it is:** Applications fail to record or alert on security-relevant events — leaving defenders blind to ongoing attacks, unable to reconstruct incidents, and unable to meet compliance obligations.
 
-**Accountability** is the IAA pillar this breaks — without logs, there is no record of who did what.
+> **The IAAA link:** Accountability is the fourth pillar of IAAA. Without logging, there is no accountability — and without accountability, there is no way to detect, investigate, or attribute an attack.
+
+### What Happens Without Adequate Logging
+
+| Consequence | Impact |
+|-------------|--------|
+| Attacks go undetected | Attackers operate freely with no alerts triggered |
+| Incident response is blind | No timeline or evidence to reconstruct what happened |
+| Compliance failures | Regulations like GDPR, PCI-DSS, and ISO 27001 require audit trails |
+| Breach dwell time increases | Average breach dwell time is months — logging is how you catch it earlier |
 
 ### What Should Be Logged
 
-| Event | Why It Matters |
-|-------|---------------|
-| Failed login attempts | Detect brute force and credential stuffing |
-| Privilege escalation | Detect lateral movement and insider threats |
-| Access to sensitive data | Detect exfiltration or unauthorised access |
-| Configuration changes | Detect tampering or persistence mechanisms |
-| Errors and exceptions | Surface exploitation attempts and crashes |
+| Event | Why |
+|-------|-----|
+| Failed login attempts | Detect brute force, credential stuffing, and password spraying |
+| Successful logins (especially from new IPs/devices) | Detect account takeover |
+| Access to sensitive data or resources | Detect unauthorised access and exfiltration |
+| Privilege escalation or role changes | Detect insider threats and lateral movement |
+| Configuration or permission changes | Detect persistence mechanisms and tampering |
+| Input validation failures | Surface injection attempts and fuzzing |
+| Errors and unhandled exceptions | Reveal exploitation attempts in progress |
 
-> **The goal isn't just logging — it's alerting.** Logs that are never reviewed or fed into a SIEM provide no defensive value. Detection requires both collection and monitoring.
+### Logging vs Alerting
 
----
+| Layer | Purpose | Tool Examples |
+|-------|---------|--------------|
+| **Logging** | Capture and store security events with sufficient detail | Application logs, syslog, CloudTrail |
+| **Monitoring** | Aggregate and visualise log data | ELK Stack, Splunk, Graylog |
+| **Alerting** | Trigger notifications when suspicious patterns are detected | SIEM rules, detection engineering, SOC workflows |
 
-## ⚙️ Application Design Failures
-
----
-
-## A02 — Security Misconfigurations 🔧
-
-**What it is:** Systems, servers, or applications deployed with unsafe defaults, incomplete settings, or unnecessarily exposed services. One of the most common and easily preventable vulnerability classes.
-
-> **Real-world example (2017):** Uber left an S3 backup bucket publicly accessible with no credentials required — attackers downloaded sensitive driver and rider data directly. A deployment mistake caused a significant breach.
-
-### Common Patterns
-
-| Pattern | Example |
-|---------|---------|
-| Default credentials | Admin/admin left unchanged on routers, databases, or CMS platforms |
-| Exposed unnecessary services | Debug endpoints, admin panels, or internal APIs reachable from the internet |
-| Misconfigured cloud storage | S3 buckets, Azure Blob, or GCP buckets set to public read |
-| Missing authentication on APIs | Endpoints accessible without any auth token or key |
-| Verbose error messages | Stack traces exposing file paths, framework versions, or database structure |
-| Outdated software | Unpatched frameworks, containers, or libraries with known CVEs |
-| Exposed AI/ML endpoints | Model inference endpoints accessible without access controls |
-
-### Prevention
-
-- Harden defaults and remove unused features, services, and endpoints
-- Enforce least privilege and strong authentication across all systems
-- Limit network exposure and segment sensitive resources
-- Keep software, frameworks, and containers up to date
-- Strip stack traces and system info from error responses
-- Audit cloud storage permissions regularly
-- Integrate automated configuration checks into CI/CD pipelines
-
----
-
-## A03 — Software Supply Chain 📦
-
-**What it is:** Applications rely on components, libraries, services, or models that are compromised, outdated, or improperly verified. A single malicious dependency can compromise an entire system — without touching your own code.
-
-> **Real-world example (2021):** The SolarWinds Orion compromise — attackers inserted malicious code into a trusted software update. Thousands of organisations automatically installed it. The flaw wasn't in SolarWinds' core logic — it was in the build, verification, and distribution process.
-
-### Common Patterns
-
-| Pattern | Risk |
-|---------|------|
-| Unverified or unmaintained dependencies | Libraries with known CVEs or malicious forks |
-| Auto-installing updates without verification | A compromised update silently reaches production |
-| Over-reliance on third-party AI models | Models pulled from unverified sources may contain backdoors |
-| Insecure CI/CD pipelines | Tampering during build or deployment injects malicious code |
-| No provenance or license tracking | No visibility into where components come from |
-| No post-deployment monitoring | Vulnerabilities discovered after deployment go unaddressed |
-
-### Prevention
-
-- Verify all third-party components, libraries, and AI models before use
-- Sign, verify, and audit software updates and packages
-- Lock down CI/CD pipelines to prevent tampering
-- Monitor and patch dependencies continuously — not just at deployment
-- Track provenance and licensing for all components
-- Include supply chain threat modelling in the SDLC
-
----
-
-## A04 — Cryptographic Failures 🔐
-
-**What it is:** Encryption is used incorrectly, weakly, or not at all — including weak algorithms, hard-coded keys, poor key management, or sensitive data transmitted in plaintext.
-
-### Common Patterns
-
-| Pattern | Why It's Dangerous |
-|---------|-------------------|
-| Weak algorithms (MD5, SHA-1, ECB mode) | Broken — trivially reversible or collision-prone |
-| Hard-coded secrets in source code | Secrets committed to repos are exposed to anyone with access |
-| Poor key rotation | Old compromised keys remain valid indefinitely |
-| No encryption at rest | Database breach exposes plaintext sensitive data |
-| Invalid/self-signed TLS certificates | Opens the door to MITM attacks |
-| AI/ML systems exposing model parameters | Sensitive inputs or embeddings transmitted without encryption |
-
-### Prevention
-
-| Recommendation | Detail |
-|----------------|--------|
-| Use modern algorithms | AES-GCM, ChaCha20-Poly1305 for symmetric; TLS 1.3 for transport |
-| Use a key management service | Azure Key Vault, AWS KMS, HashiCorp Vault — never hard-code secrets |
-| Rotate keys and secrets regularly | Follow defined cryptographic periods |
-| Maintain a certificate/key inventory | Know who owns what, when it expires |
-| Enforce encryption at rest and in transit | No plaintext sensitive data anywhere in the stack |
-
----
-
-## A06 — Insecure Design 🏗️
-
-**What it is:** Flawed logic or architecture is built into a system from the start — through skipped threat modelling, absent design requirements, or unchecked assumptions about how users (or AI) will behave. Unlike misconfiguration, insecure design cannot be fixed by patching — it requires redesigning the system.
-
-> **Real-world example:** Clubhouse's early backend API had no authentication — anyone could query user data, room info, and private conversations directly, bypassing the mobile app entirely. The "private conversation" model was an illusion built on a broken foundation.
-
-### Common Insecure Design Patterns (2025)
-
-| Pattern | Description |
-|---------|-------------|
-| Weak business logic controls | Recovery flows, approval chains, or state transitions that can be abused |
-| Flawed assumptions about user behaviour | Designing only for the happy path — not adversarial users |
-| AI components with unchecked authority | LLMs or agents that can take actions without limits or oversight |
-| Missing LLM guardrails | No input/output filtering, no prompt injection protections |
-| Test/debug bypasses left in production | Developer shortcuts that become attack vectors |
-| No abuse-case review | Security requirements are defined but never tested against adversarial scenarios |
-
-### AI-Specific Design Risks in 2025
-
-| Risk | Description |
-|------|-------------|
-| **Prompt injection** | User input blends with system prompts — attacker hijacks context or extracts hidden data |
-| **Blind trust in model output** | Acting on AI decisions without validation creates fragile, exploitable systems |
-| **Poisoned models** | Models pulled from unverified sources or fine-tuned on unsafe data embed hidden behaviours or backdoors |
-| **Unchecked agent authority** | Automation agents with excessive permissions can be manipulated to take destructive actions |
-
-### How to Design Securely
-
-- Build threat modelling into **every stage** of development — not just at the start
-- Define clear security requirements for each feature before implementation
-- Apply least privilege across users, APIs, services, and AI agents
-- Treat every model as untrusted — validate and filter all inputs and outputs
-- Separate system prompts from user content; keep sensitive data out of prompts
-- Require human review for high-risk AI actions
-- Log model provenance, monitor behaviour, and apply differential privacy for sensitive data
-- Continuously test for logic flaws, abuse paths, and emergent risks as new components are added
+> **Logs that are never reviewed are security theatre.** Effective accountability requires all three layers — logs collected, centralised into a SIEM, and monitored with tuned detection rules. A SOC analyst's job is built on this chain.
