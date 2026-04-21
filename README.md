@@ -93,12 +93,14 @@ Cybersecurity write-ups from TryHackMe labs covering offensive &amp; defensive s
 ### 🌍 General Security
 | Room | Difficulty | Topics | Write-Up |
 |------|-----------|--------|----------|
-| Security Principles | Easy | secuirty triad, secuirty models, ISO/IEC 19249, zero trust | [📄 Read](general/principles.md) |
+| Security Principles | Easy | security triad, security models, ISO/IEC 19249, zero trust | [📄 Read](general/principles.md) |
 
-### 🔜 Coming Soon
-| Module | Status |
-|--------|--------|
-| OWASP Top 10 | 🔄 In Progress |
+### 🌍 Owasp Top 10
+| Room | Difficulty | Topics | Write-Up |
+|------|-----------|--------|----------|
+| IAAA Failures | Easy | broken access control, authentication failures, logging and alerting failures | [📄 Read](owasp/iaaa.md) |
+| Application Design Overflow | Easy | security misconfigurations, software supply chain, cryotographic failures | [📄 Read](owasp/ado.md) |
+| Insecure Data Handling | Easy |  | [📄 Read](owasp/idh.md) |
 
 ---
 
